@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Question For You...</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Nunito:wght@500;700&display=swap");
+
+      :root {
+        --bg-one: #ffc8db;
+        --bg-two: #ffe8b6;
+        --ink: #4f2f43;
+        --line: #ffbfd6;
+        --card: #fffaf3;
+        --letter-bg: #fff8fc;
+        --btn-one: #ff739c;
+        --btn-two: #ff4f83;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 16px;
+        background:
+          radial-gradient(circle at 12% 16%, #fff7d6 0, #fff7d6 14%, transparent 15%),
+          radial-gradient(circle at 88% 20%, #ffd8ea 0, #ffd8ea 12%, transparent 13%),
+          linear-gradient(135deg, var(--bg-one), var(--bg-two));
+        font-family: "Baloo 2", "Nunito", "Segoe UI", sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.45;
+        pointer-events: none;
+        animation: bob 8s ease-in-out infinite;
+      }
+
+      body::before {
+        width: 180px;
+        height: 180px;
+        background: #ffd3e4;
+        left: -40px;
+        top: 18%;
+      }
+
+      body::after {
+        width: 210px;
+        height: 210px;
+        background: #ffe6a8;
+        right: -70px;
+        bottom: 8%;
+        animation-delay: 1.4s;
+      }
+
+      #preface,
+      #main,
+      #letterSection {
+        position: relative;
+        z-index: 1;
+      }
+
+      #preface {
+        text-align: center;
+        animation: fadeIn 0.9s ease;
+        background: rgba(255, 255, 255, 0.45);
+        border: 2px dashed var(--line);
+        border-radius: 28px;
+        padding: 28px 22px;
+        box-shadow: 0 16px 34px rgba(130, 56, 88, 0.15);
+      }
+
+      #preface h1 {
+        color: var(--ink);
+        margin: 0 0 18px;
+        font-size: clamp(24px, 4.8vw, 38px);
+        line-height: 1.2;
+      }
+
+      .preface-btn {
+        padding: 11px 24px;
+        font-size: 20px;
+        background: linear-gradient(135deg, var(--btn-one), var(--btn-two));
+        color: #fff;
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 700;
+        box-shadow: 0 10px 20px rgba(255, 79, 131, 0.28);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .preface-btn:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 13px 24px rgba(255, 79, 131, 0.35);
+      }
+
+      #main {
+        text-align: center;
+        display: none;
+        animation: fadeInUp 0.8s ease both;
+      }
+
+      #main h1 {
+        margin: 0 0 10px;
+        color: var(--ink);
+        font-size: clamp(32px, 7vw, 54px);
+        animation: pulseQuestion 2.2s ease-in-out infinite;
+      }
+
+      .question-sub {
+        margin: 0 0 20px;
+        color: #7c3b5d;
+        font-size: clamp(16px, 3.7vw, 24px);
+        font-weight: 700;
+        letter-spacing: 0.4px;
+      }
+
+      .hero-image-wrap {
+        width: min(280px, 74vw);
+        margin: 0 auto 22px;
+        padding: 10px;
+        border-radius: 26px;
+        border: 2px dashed #ffb8cf;
+        background: linear-gradient(145deg, #fff4fa, #fff9ee);
+        box-shadow: 0 14px 30px rgba(130, 56, 88, 0.18);
+        animation: floatCard 3.4s ease-in-out infinite;
+      }
+
+      .hero-image {
+        width: 100%;
+        display: block;
+        border-radius: 18px;
+        animation: softZoom 5s ease-in-out infinite;
+      }
+
+      #letterSection {
+        display: none;
+        width: min(94vw, 780px);
+        max-height: 88vh;
+        overflow-y: auto;
+        background: linear-gradient(180deg, var(--card), #fff3fa 40%, #fff8ec);
+        border: 2px dashed var(--line);
+        border-radius: 26px;
+        box-shadow: 0 18px 42px rgba(136, 64, 95, 0.2);
+        padding: 26px;
+        color: var(--ink);
+        animation: popIn 0.42s ease both;
+      }
+
+      #letterSection::before {
+        content: "official love form";
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 999px;
+        background: #ffe0ec;
+        color: #b84f78;
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      #letterSection h2 {
+        margin: 0 0 10px;
+        font-size: clamp(24px, 4vw, 34px);
+        line-height: 1.25;
+      }
+
+      #letterMeta {
+        margin: 0 0 14px;
+        color: #814d67;
+        font-size: 14px;
+        font-weight: 700;
+        background: #fff3f9;
+        border: 1px solid #ffd0e2;
+        border-radius: 12px;
+        display: inline-block;
+        padding: 6px 10px;
+      }
+
+      #letterText {
+        white-space: pre-wrap;
+        line-height: 1.82;
+        font-family: "Nunito", "Baloo 2", sans-serif;
+        border: 2px solid #ffd8e8;
+        border-radius: 18px;
+        background:
+          repeating-linear-gradient(
+            to bottom,
+            var(--letter-bg) 0,
+            var(--letter-bg) 29px,
+            #ffeaf3 30px
+          );
+        padding: 20px;
+      }
+
+      #emailStatus {
+        margin-top: 12px;
+        color: #5c4460;
+        font-size: 14px;
+        background: #fff0f7;
+        border-radius: 10px;
+        padding: 9px 12px;
+      }
+
+      .letter-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 16px;
+        flex-wrap: wrap;
+      }
+
+      .letter-btn {
+        padding: 11px 18px;
+        border: none;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--btn-one), var(--btn-two));
+        color: #fff;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 18px rgba(255, 79, 131, 0.28);
+        transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+      }
+
+      .letter-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 11px 22px rgba(255, 79, 131, 0.34);
+        filter: brightness(1.05);
+      }
+
+      .letter-btn.secondary {
+        background: linear-gradient(135deg, #5dc7b5, #2fa595);
+        box-shadow: 0 8px 18px rgba(47, 165, 149, 0.27);
+      }
+
+      .buttons {
+        margin-right: 145px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .action-btn {
+        width: 110px;
+        padding: 7px 0;
+        font-size: 24px;
+        border: none;
+        border-radius: 16px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        font-family: "Baloo 2", "Nunito", sans-serif;
+        font-weight: 700;
+      }
+
+      #yesBtn {
+        background: linear-gradient(135deg, #2ec179, #26a767);
+        color: #fff;
+        box-shadow: 0 8px 16px rgba(38, 167, 103, 0.27);
+        animation: pulseYes 1.5s ease-in-out infinite;
+      }
+
+      #noBtn {
+        background: linear-gradient(135deg, #ff6a89, #ee426d);
+        color: #fff;
+        position: absolute;
+        left: 120px;
+        top: 0;
+      }
+
+      .spark {
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.75;
+        font-size: 20px;
+        animation: drift linear forwards;
+      }
+
+      @media (max-width: 680px) {
+        body {
+          padding: 12px;
+        }
+
+        #preface {
+          padding: 22px 16px;
+          border-radius: 22px;
+        }
+
+        .buttons {
+          margin-right: 130px;
+        }
+
+        .action-btn {
+          width: 104px;
+          font-size: 22px;
+        }
+
+        #letterSection {
+          width: 96vw;
+          padding: 20px 16px;
+          border-radius: 22px;
+        }
+
+        #letterText {
+          padding: 16px;
+          font-size: 14px;
+          line-height: 1.72;
+        }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes popIn {
+        from { opacity: 0; transform: scale(0.98) translateY(8px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+      }
+
+      @keyframes bob {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes pulseQuestion {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+      }
+
+      @keyframes floatCard {
+        0%, 100% { transform: translateY(0px) rotate(-0.6deg); }
+        50% { transform: translateY(-9px) rotate(0.6deg); }
+      }
+
+      @keyframes softZoom {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.04); }
+      }
+
+      @keyframes pulseYes {
+        0%, 100% { transform: scale(1); box-shadow: 0 8px 16px rgba(38, 167, 103, 0.27); }
+        50% { transform: scale(1.08); box-shadow: 0 12px 24px rgba(38, 167, 103, 0.34); }
+      }
+
+      @keyframes drift {
+        from { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+        to { transform: translateY(-130vh) rotate(360deg); opacity: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="preface">
+      <h1>I have an important question for you... 💌</h1>
+      <button class="preface-btn" type="button" onclick="showQuestion()">What is it?</button>
+    </div>
+
+    <div id="main">
+      <h1>Do you love me? ❤️</h1>
+      <p class="question-sub"></p>select one answer below👇
+      <div class="hero-image-wrap">
+        <img
+          class="hero-image"
+          src="assets/IMG_1334.HEIC.png"
+          alt="Your selected photo"
+        />
+      </div>
+      <div class="buttons">
+        <button id="yesBtn" class="action-btn" onclick="sayYes()">yes😍</button>
+        <button id="noBtn" class="action-btn" type="button">no😢</button>
+      </div>
+    </div>
+
+    <div id="letterSection">
+      <h2>លិខិតបញ្ជាក់សេចក្តីស្រឡាញ់ចេញពីក្រអៅបេះដូង របស់ Moka</h2>
+      <p id="letterMeta"></p>
+      <div id="letterText"></div>
+      <p id="emailStatus"></p>
+      <div class="letter-actions">
+        <button class="letter-btn" onclick="sendEmailDraft()">Send Email Draft</button>
+        <button class="letter-btn secondary" onclick="copyLetter()">Copy Letter</button>
+      </div>
+    </div>
+
+    <script>
+      const recipientEmail = "matt.rorny2023@diu.edu.kh";
+      let currentLetter = "";
+      let currentDecisionId = "";
+      const sparkIcons = ["❤", "✨", "💖", "💕"];
+
+      function formatDateTime(date) {
+        const dd = String(date.getDate()).padStart(2, "0");
+        const mm = String(date.getMonth() + 1).padStart(2, "0");
+        const yyyy = date.getFullYear();
+        const hh = String(date.getHours()).padStart(2, "0");
+        const mi = String(date.getMinutes()).padStart(2, "0");
+        const ss = String(date.getSeconds()).padStart(2, "0");
+        return `${dd}/${mm}/${yyyy} ${hh}:${mi}:${ss}`;
+      }
+
+      function createDecisionId(date) {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, "0");
+        const d = String(date.getDate()).padStart(2, "0");
+        const hh = String(date.getHours()).padStart(2, "0");
+        const mm = String(date.getMinutes()).padStart(2, "0");
+        const ss = String(date.getSeconds()).padStart(2, "0");
+        return `LUV-${y}${m}${d}-${hh}${mm}${ss}`;
+      }
+
+      function buildDecisionLetter(date, decisionId) {
+        const dateText = formatDateTime(date);
+
+        return `លិខិតបញ្ជាក់សេចក្តីស្រឡាញ់ជាផ្លូវការ
+Official Declaration of Love
+
+លេខកូដបេះដូង / Heart Ref No.: ${decisionId}
+កាលបរិច្ឆេទ / Date: ${dateText}
+ជូនចំពោះម្ចាស់បេះដូង / To the owner of my heart: ${recipientEmail}
+ប្រធានបទ / Subject: លិខិតបញ្ជាក់អំពីការសម្រេចចិត្តនៃបេះដូង (Confirmation of the Heart's Decision)
+
+តាមរយៈលិខិតដ៏ពិសេសមួយនេះ ខ្ញុំសូមប្រកាស និងបញ្ជាក់ជាផ្លូវការចេញពីក្រអៅបេះដូងថា៖
+
+រាល់ការឆ្លើយតបចំពោះសំណួរ "If I want ឲអ្នកផ្សេងមើលបាន" គឺត្រូវបានសម្រេចជាឯកច្ឆន្ទដោយគ្មានការស្ទាក់ស្ទើរថា៖
+
+"YES, I DO LOVE YOU!" (ស្រឡាញ់... ស្រឡាញ់ខ្លាំងណាស់!)។
+
+ការសម្រេចចិត្តមួយនេះ មិនមែនជារឿងចៃដន្យឡើយ តែវាជាចម្លើយដែលកើតចេញពីក្តីស្រឡាញ់ដ៏ស្មោះត្រង់ ការយកចិត្តទុកដាក់ និងមនោសញ្ចេតនាដែលមិនអាចប្រែប្រួលបាន។
+
+លិខិតនេះត្រូវបានរៀបចំឡើងជា "ទម្រង់ស្តង់ដារនៃសេចក្តីស្នេហា" ដើម្បីប្រើប្រាស់ជាឯកសារតម្កល់ទុកក្នុងបេះដូងរបស់អ្នក និងជាការធានាអះអាងថា ក្តីស្រឡាញ់មួយនេះនឹងនៅតែស្ថិតស្ថេរជារៀងរហូត។`;
+      }
+
+      function renderLetter(letter, decisionId, date) {
+        document.getElementById("main").style.display = "none";
+        document.getElementById("letterSection").style.display = "block";
+        document.getElementById("letterMeta").textContent =
+          `Heart Ref: ${decisionId} | Created: ${formatDateTime(date)}`;
+        document.getElementById("letterText").textContent = letter;
+        document.getElementById("emailStatus").textContent =
+          `អ៊ីមែលគោលដៅ: ${recipientEmail}`;
+      }
+
+      function showQuestion() {
+        document.getElementById("preface").style.display = "none";
+        document.getElementById("main").style.display = "block";
+        startSparkRain();
+      }
+
+      const noBtn = document.getElementById("noBtn");
+      let isFixed = false;
+
+      noBtn.addEventListener("mouseenter", moveButton);
+      noBtn.addEventListener("touchstart", moveButton, { passive: false });
+
+      function moveButton(e) {
+        if (e.type === "touchstart") {
+          e.preventDefault();
+        }
+
+        const padding = 20;
+        const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+        const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        let newX, newY;
+        while (true) {
+          newX = Math.random() * maxX;
+          newY = Math.random() * maxY;
+
+          if ((newX - clientX) ** 2 + (newY - clientY) ** 2 >= 150 * 150) {
+            break;
+          }
+        }
+
+        if (!isFixed) {
+          const rect = noBtn.getBoundingClientRect();
+          noBtn.style.position = "fixed";
+          noBtn.style.left = rect.left + "px";
+          noBtn.style.top = rect.top + "px";
+          noBtn.offsetHeight;
+          noBtn.style.transition = "left 0.3s ease, top 0.3s ease";
+          isFixed = true;
+        }
+
+        noBtn.style.left = newX + "px";
+        noBtn.style.top = newY + "px";
+      }
+
+      function sayYes() {
+        const now = new Date();
+        currentDecisionId = createDecisionId(now);
+        currentLetter = buildDecisionLetter(now, currentDecisionId);
+        renderLetter(currentLetter, currentDecisionId, now);
+        sendEmailDraft();
+      }
+
+      function sendEmailDraft() {
+        if (!currentLetter) return;
+
+        const subject = `Official Declaration of Love - ${currentDecisionId}`;
+        const body = currentLetter;
+        const mailtoLink =
+          `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}` +
+          `&body=${encodeURIComponent(body)}`;
+
+        window.location.href = mailtoLink;
+        document.getElementById("emailStatus").textContent =
+          `Email draft prepared for ${recipientEmail}. If it did not open, click "Send Email Draft" again.`;
+      }
+
+      function copyLetter() {
+        if (!currentLetter) return;
+
+        navigator.clipboard.writeText(currentLetter)
+          .then(() => {
+            document.getElementById("emailStatus").textContent =
+              "Letter copied to clipboard.";
+          })
+          .catch(() => {
+            document.getElementById("emailStatus").textContent =
+              "Copy failed on this browser. Please copy manually from the letter text.";
+          });
+      }
+
+      function createSpark() {
+        const spark = document.createElement("span");
+        spark.className = "spark";
+        spark.textContent = sparkIcons[Math.floor(Math.random() * sparkIcons.length)];
+        spark.style.left = `${Math.random() * 100}vw`;
+        spark.style.bottom = "-28px";
+        spark.style.fontSize = `${14 + Math.random() * 24}px`;
+        spark.style.animationDuration = `${5 + Math.random() * 4}s`;
+        document.body.appendChild(spark);
+        setTimeout(() => spark.remove(), 9000);
+      }
+
+      function startSparkRain() {
+        for (let i = 0; i < 8; i++) {
+          setTimeout(createSpark, i * 180);
+        }
+        setInterval(createSpark, 900);
+      }
+    </script>
+  </body>
+</html>
