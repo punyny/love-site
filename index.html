@@ -109,6 +109,7 @@
 
       #main {
         text-align: center;
+        width: min(96vw, 980px);
         display: none;
         animation: fadeInUp 0.8s ease both;
       }
@@ -144,6 +145,63 @@
         display: block;
         border-radius: 18px;
         animation: softZoom 5s ease-in-out infinite;
+      }
+
+      .memory-album {
+        margin: 18px auto 0;
+        padding: 14px;
+        border-radius: 20px;
+        border: 2px dashed #ffb8cf;
+        background: linear-gradient(140deg, #fff8fc, #fff5e9);
+        box-shadow: 0 10px 24px rgba(130, 56, 88, 0.14);
+        text-align: left;
+      }
+
+      .memory-title {
+        margin: 0 0 6px;
+        color: #7c3b5d;
+        font-size: clamp(18px, 3.7vw, 24px);
+      }
+
+      .memory-sub {
+        margin: 0 0 10px;
+        color: #90516f;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .memory-track {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(168px, 210px);
+        gap: 12px;
+        overflow-x: auto;
+        padding: 2px 2px 8px;
+        scroll-snap-type: x mandatory;
+      }
+
+      .memory-item {
+        scroll-snap-align: start;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 2px solid #ffd2e3;
+        background: #fff;
+        box-shadow: 0 7px 16px rgba(119, 54, 82, 0.16);
+      }
+
+      .memory-item img {
+        width: 100%;
+        height: 188px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .memory-item figcaption {
+        padding: 8px 10px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #7b4a63;
+        background: #fff8fd;
       }
 
       #letterSection {
@@ -317,6 +375,14 @@
           border-radius: 22px;
         }
 
+        .memory-track {
+          grid-auto-columns: minmax(150px, 180px);
+        }
+
+        .memory-item img {
+          height: 160px;
+        }
+
         #letterText {
           padding: 16px;
           font-size: 14px;
@@ -378,7 +444,7 @@
 
     <div id="main">
       <h1>Do you love me? ❤️</h1>
-      <p class="question-sub"></p>select one answer below👇
+      <p class="question-sub">Select one answer below 👇</p>
       <div class="hero-image-wrap">
         <img
           class="hero-image"
@@ -386,6 +452,40 @@
           alt="Your selected photo"
         />
       </div>
+      <section class="memory-album" aria-label="Memory album">
+        <h2 class="memory-title">Memory Album</h2>
+        <p class="memory-sub">Our sweet moments together 💞</p>
+        <div class="memory-track">
+          <figure class="memory-item">
+            <img src="assets/IMG_1334.HEIC.png" alt="Memory photo 1" loading="lazy" />
+            <figcaption>Moment 1</figcaption>
+          </figure>
+          <figure class="memory-item">
+            <img src="assets/IMG_0434.JPG" alt="Memory photo 2" loading="lazy" />
+            <figcaption>Moment 2</figcaption>
+          </figure>
+          <figure class="memory-item">
+            <img src="assets/IMG_0435.JPG" alt="Memory photo 3" loading="lazy" />
+            <figcaption>Moment 3</figcaption>
+          </figure>
+          <figure class="memory-item">
+            <img src="assets/IMG_0445.JPG" alt="Memory photo 4" loading="lazy" />
+            <figcaption>Moment 4</figcaption>
+          </figure>
+          <figure class="memory-item">
+            <img src="assets/IMG_0448.JPG" alt="Memory photo 5" loading="lazy" />
+            <figcaption>Moment 5</figcaption>
+          </figure>
+          <figure class="memory-item">
+            <img src="assets/IMG_0449.JPG" alt="Memory photo 6" loading="lazy" />
+            <figcaption>Moment 6</figcaption>
+          </figure>
+          <figure class="memory-item">
+            <img src="assets/IMG_1159.jpg" alt="Memory photo 7" loading="lazy" />
+            <figcaption>Moment 7</figcaption>
+          </figure>
+        </div>
+      </section>
       <div class="buttons">
         <button id="yesBtn" class="action-btn" onclick="sayYes()">yes😍</button>
         <button id="noBtn" class="action-btn" type="button">no😢</button>
