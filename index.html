@@ -39,6 +39,10 @@
         position: relative;
       }
 
+      body.no-scroll {
+        overflow: hidden;
+      }
+
       body::before,
       body::after {
         content: "";
@@ -150,59 +154,185 @@
 
       .memory-album {
         margin: 18px auto 0;
-        padding: 14px;
-        border-radius: 20px;
+        padding: 16px;
+        border-radius: 22px;
         border: 2px dashed #ffb8cf;
-        background: linear-gradient(140deg, #fff8fc, #fff5e9);
-        box-shadow: 0 10px 24px rgba(130, 56, 88, 0.14);
+        background:
+          radial-gradient(circle at 90% 10%, rgba(255, 210, 232, 0.55), transparent 38%),
+          linear-gradient(140deg, #fff8fc, #fff5e9);
+        box-shadow: 0 12px 26px rgba(130, 56, 88, 0.16);
         text-align: left;
       }
 
+      .memory-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
       .memory-title {
-        margin: 0 0 6px;
+        margin: 0 0 5px;
         color: #7c3b5d;
         font-size: clamp(18px, 3.7vw, 24px);
       }
 
       .memory-sub {
-        margin: 0 0 10px;
+        margin: 0;
         color: #90516f;
         font-size: 14px;
         font-weight: 700;
       }
 
+      .memory-tip {
+        color: #a54f75;
+        font-size: 12px;
+        font-weight: 700;
+        background: #ffeaf4;
+        border: 1px solid #ffc8df;
+        border-radius: 999px;
+        padding: 6px 10px;
+        white-space: nowrap;
+      }
+
       .memory-track {
         display: grid;
         grid-auto-flow: column;
-        grid-auto-columns: minmax(168px, 210px);
-        gap: 12px;
+        grid-auto-columns: minmax(176px, 230px);
+        gap: 13px;
         overflow-x: auto;
-        padding: 2px 2px 8px;
+        padding: 2px 2px 10px;
         scroll-snap-type: x mandatory;
+      }
+
+      .memory-track::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .memory-track::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #ff9fbd, #ff7fa6);
+        border-radius: 999px;
       }
 
       .memory-item {
         scroll-snap-align: start;
-        border-radius: 14px;
+        border-radius: 15px;
         overflow: hidden;
         border: 2px solid #ffd2e3;
         background: #fff;
-        box-shadow: 0 7px 16px rgba(119, 54, 82, 0.16);
+        box-shadow: 0 8px 18px rgba(119, 54, 82, 0.18);
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .memory-item:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 13px 24px rgba(119, 54, 82, 0.24);
       }
 
       .memory-item img {
         width: 100%;
-        height: 188px;
+        height: 196px;
         object-fit: cover;
         display: block;
       }
 
       .memory-item figcaption {
         padding: 8px 10px;
-        font-size: 13px;
-        font-weight: 700;
         color: #7b4a63;
         background: #fff8fd;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+      }
+
+      .memory-item figcaption strong {
+        font-size: 13px;
+      }
+
+      .memory-item figcaption small {
+        font-size: 11px;
+        color: #a46282;
+      }
+
+      .album-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        display: none;
+        background: rgba(40, 18, 34, 0.86);
+        backdrop-filter: blur(3px);
+        align-items: center;
+        justify-content: center;
+        padding: 14px;
+      }
+
+      .album-lightbox.open {
+        display: flex;
+      }
+
+      .lightbox-frame {
+        margin: 0;
+        width: min(95vw, 1000px);
+        max-height: 90vh;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 2px solid #ffc7de;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+        background: #fff8fc;
+      }
+
+      .lightbox-frame img {
+        display: block;
+        width: 100%;
+        max-height: 78vh;
+        object-fit: contain;
+        background: #1b0f18;
+      }
+
+      .lightbox-frame figcaption {
+        padding: 10px 14px;
+        color: #7d4964;
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .lightbox-close,
+      .lightbox-nav {
+        position: fixed;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 999px;
+        background: rgba(255, 113, 158, 0.9);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .lightbox-close {
+        top: 14px;
+        right: 14px;
+        width: 44px;
+        height: 44px;
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .lightbox-nav {
+        top: 50%;
+        transform: translateY(-50%);
+        width: 46px;
+        height: 46px;
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .lightbox-nav.prev {
+        left: 14px;
+      }
+
+      .lightbox-nav.next {
+        right: 14px;
       }
 
       #letterSection {
@@ -379,11 +509,22 @@
         }
 
         .memory-track {
-          grid-auto-columns: minmax(150px, 180px);
+          grid-auto-columns: minmax(155px, 185px);
         }
 
         .memory-item img {
           height: 160px;
+        }
+
+        .memory-head {
+          flex-wrap: wrap;
+          align-items: center;
+        }
+
+        .lightbox-nav {
+          width: 40px;
+          height: 40px;
+          font-size: 24px;
         }
 
         #letterText {
@@ -460,39 +601,69 @@
         <button id="noBtn" class="action-btn" type="button">no😢</button>
       </div>
       <section class="memory-album" aria-label="Memory album">
-        <h2 class="memory-title">Memory Album</h2>
-        <p class="memory-sub">Our sweet moments together 💞</p>
+        <div class="memory-head">
+          <div>
+            <h2 class="memory-title">Memory Album</h2>
+            <p class="memory-sub">Our sweet moments together 💞</p>
+          </div>
+          <span class="memory-tip">Tap a photo to view full size</span>
+        </div>
         <div class="memory-track">
           <figure class="memory-item">
             <img src="assets/IMG_1334.HEIC.png" alt="Memory photo 1" loading="lazy" />
-            <figcaption>Moment 1</figcaption>
+            <figcaption><strong>Moment 1</strong><small>Tap to open</small></figcaption>
           </figure>
           <figure class="memory-item">
             <img src="assets/IMG_0434.JPG" alt="Memory photo 2" loading="lazy" />
-            <figcaption>Moment 2</figcaption>
+            <figcaption><strong>Moment 2</strong><small>Tap to open</small></figcaption>
           </figure>
           <figure class="memory-item">
             <img src="assets/IMG_0435.JPG" alt="Memory photo 3" loading="lazy" />
-            <figcaption>Moment 3</figcaption>
+            <figcaption><strong>Moment 3</strong><small>Tap to open</small></figcaption>
           </figure>
           <figure class="memory-item">
             <img src="assets/IMG_0445.JPG" alt="Memory photo 4" loading="lazy" />
-            <figcaption>Moment 4</figcaption>
+            <figcaption><strong>Moment 4</strong><small>Tap to open</small></figcaption>
           </figure>
           <figure class="memory-item">
             <img src="assets/IMG_0448.JPG" alt="Memory photo 5" loading="lazy" />
-            <figcaption>Moment 5</figcaption>
+            <figcaption><strong>Moment 5</strong><small>Tap to open</small></figcaption>
           </figure>
           <figure class="memory-item">
             <img src="assets/IMG_0449.JPG" alt="Memory photo 6" loading="lazy" />
-            <figcaption>Moment 6</figcaption>
+            <figcaption><strong>Moment 6</strong><small>Tap to open</small></figcaption>
           </figure>
           <figure class="memory-item">
             <img src="assets/IMG_1159.jpg" alt="Memory photo 7" loading="lazy" />
-            <figcaption>Moment 7</figcaption>
+            <figcaption><strong>Moment 7</strong><small>Tap to open</small></figcaption>
           </figure>
         </div>
       </section>
+    </div>
+
+    <div id="albumLightbox" class="album-lightbox" aria-hidden="true">
+      <button
+        class="lightbox-close"
+        type="button"
+        onclick="closeLightbox()"
+        aria-label="Close full image"
+      >×</button>
+      <button
+        class="lightbox-nav prev"
+        type="button"
+        onclick="changeLightboxImage(-1)"
+        aria-label="Previous image"
+      >‹</button>
+      <figure class="lightbox-frame">
+        <img id="lightboxImage" src="" alt="Full memory photo" />
+        <figcaption id="lightboxCaption"></figcaption>
+      </figure>
+      <button
+        class="lightbox-nav next"
+        type="button"
+        onclick="changeLightboxImage(1)"
+        aria-label="Next image"
+      >›</button>
     </div>
 
     <div id="letterSection">
@@ -511,6 +682,44 @@
       let currentLetter = "";
       let currentDecisionId = "";
       const sparkIcons = ["❤", "✨", "💖", "💕"];
+      const memoryItems = Array.from(document.querySelectorAll(".memory-item"));
+      const lightbox = document.getElementById("albumLightbox");
+      const lightboxImage = document.getElementById("lightboxImage");
+      const lightboxCaption = document.getElementById("lightboxCaption");
+      let currentMemoryIndex = -1;
+
+      function setLightboxImage(index) {
+        if (!memoryItems.length) return;
+
+        const total = memoryItems.length;
+        currentMemoryIndex = (index + total) % total;
+        const item = memoryItems[currentMemoryIndex];
+        const img = item.querySelector("img");
+        const title = item.querySelector("strong");
+
+        lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt;
+        lightboxCaption.textContent = title ? title.textContent : img.alt;
+      }
+
+      function openLightbox(index) {
+        setLightboxImage(index);
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.classList.add("no-scroll");
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.src = "";
+        document.body.classList.remove("no-scroll");
+      }
+
+      function changeLightboxImage(direction) {
+        if (!lightbox.classList.contains("open")) return;
+        setLightboxImage(currentMemoryIndex + direction);
+      }
 
       function formatDateTime(date) {
         const dd = String(date.getDate()).padStart(2, "0");
@@ -569,6 +778,33 @@ Official Declaration of Love
         document.getElementById("main").style.display = "block";
         startSparkRain();
       }
+
+      memoryItems.forEach((item, index) => {
+        const label = item.querySelector("strong")?.textContent || `Memory ${index + 1}`;
+        item.setAttribute("tabindex", "0");
+        item.setAttribute("role", "button");
+        item.setAttribute("aria-label", `Open full image for ${label}`);
+        item.addEventListener("click", () => openLightbox(index));
+        item.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openLightbox(index);
+          }
+        });
+      });
+
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (!lightbox.classList.contains("open")) return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowRight") changeLightboxImage(1);
+        if (e.key === "ArrowLeft") changeLightboxImage(-1);
+      });
 
       const noBtn = document.getElementById("noBtn");
       let isFixed = false;
