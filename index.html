@@ -34,7 +34,8 @@
           radial-gradient(circle at 88% 20%, #ffd8ea 0, #ffd8ea 12%, transparent 13%),
           linear-gradient(135deg, var(--bg-one), var(--bg-two));
         font-family: "Baloo 2", "Nunito", "Segoe UI", sans-serif;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
         position: relative;
       }
 
@@ -309,9 +310,11 @@
       }
 
       .buttons {
-        margin-right: 145px;
+        margin: 10px auto 14px;
         position: relative;
         display: inline-block;
+        width: 235px;
+        height: 44px;
       }
 
       .action-btn {
@@ -361,7 +364,7 @@
         }
 
         .buttons {
-          margin-right: 130px;
+          width: 220px;
         }
 
         .action-btn {
@@ -452,6 +455,10 @@
           alt="Your selected photo"
         />
       </div>
+      <div class="buttons">
+        <button id="yesBtn" class="action-btn" onclick="sayYes()">yes😍</button>
+        <button id="noBtn" class="action-btn" type="button">no😢</button>
+      </div>
       <section class="memory-album" aria-label="Memory album">
         <h2 class="memory-title">Memory Album</h2>
         <p class="memory-sub">Our sweet moments together 💞</p>
@@ -486,10 +493,6 @@
           </figure>
         </div>
       </section>
-      <div class="buttons">
-        <button id="yesBtn" class="action-btn" onclick="sayYes()">yes😍</button>
-        <button id="noBtn" class="action-btn" type="button">no😢</button>
-      </div>
     </div>
 
     <div id="letterSection">
